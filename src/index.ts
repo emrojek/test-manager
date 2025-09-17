@@ -42,6 +42,12 @@ program
                 console.log(
                     `Found ${result.stats.testCount} test cases in '${relativePath}' file.`
                 );
+                console.log(
+                    `Found ${result.stats.skipCount} skipped tests in '${relativePath}' file.`
+                );
+                console.log(
+                    `Found ${result.stats.onlyCount} focused tests in '${relativePath}' file.`
+                );
             }
         } catch (error) {
             console.error('An error occured:', error);
