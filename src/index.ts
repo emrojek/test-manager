@@ -1,5 +1,6 @@
 import { parseFileContent } from './services/file-parser.js';
 import { findTestFiles } from './services/file-scanner.js';
+import { generateReport } from './services/reporter.js';
 import { Command } from 'commander';
 import fs from 'fs/promises';
 import path from 'path';
@@ -15,7 +16,7 @@ program
 
 program
     .command('scan')
-    .description('Scan a directory for test files)')
+    .description('Scan a directory for test files')
     .argument('<directory>', 'The path to the directory containing test files')
     .action(async (directory) => {
         try {
@@ -38,6 +39,21 @@ program
             await fs.writeFile(CACHE_FILE_PATH, JSON.stringify(dataToSave, null, 2));
 
             console.log(`✅ Scan complete. Analysis data saved to '${CACHE_FILE_PATH}'.`);
+        } catch (error) {
+            console.error('An error occured:', error);
+        }
+    });
+
+program
+    .command('report')
+    .description('Generate a report from the cached analysis data')
+    .action(async () => {
+        try {
+            const fileContent = await fs.readFile(CACHE_FILE_PATH, 'utf-8');
+
+            const reportData = JSON.parse(fileContent);
+
+            generateReport(reportData);
         } catch (error) {
             console.error('An error occured:', error);
         }

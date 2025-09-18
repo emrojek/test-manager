@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "dev": "tsx src/index.ts scan ../gad-playwright/tests",
+    "dev": "tsx src/index.ts",
+    "scan": "tsx src/index.ts scan ../gad-playwright/tests",
+    "report": "tsx src/index.ts report",
     "start": "node dist/index.js"
   },
   "author": "",
