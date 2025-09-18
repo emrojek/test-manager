@@ -4,6 +4,8 @@ import { Command } from 'commander';
 import fs from 'fs/promises';
 import path from 'path';
 
+const CACHE_FILE_PATH = './.cache/analysis.json';
+
 const program = new Command();
 
 program
@@ -16,14 +18,8 @@ program
     .description('Scan a directory for test files)')
     .argument('<directory>', 'The path to the directory containing test files')
     .action(async (directory) => {
-        console.log('--- Test Manager CLI ---');
-        console.log(`Directory to scan: ${directory}`);
-
         try {
             const testFiles = await findTestFiles(directory);
-            console.log(`\nFound ${testFiles.length} test files in '${directory}' directory:`);
-            testFiles.forEach((file) => console.log(`- ${path.relative(directory, file)}`));
-
             const analysisResults = [];
 
             for (const filePath of testFiles) {
@@ -33,22 +29,15 @@ program
                 analysisResults.push({ path: filePath, stats: stats });
             }
 
-            for (const result of analysisResults) {
-                const relativePath = path.relative(directory, result.path);
+            const dataToSave = analysisResults.map((result) => ({
+                relativePath: path.relative(directory, result.path),
+                stats: result.stats,
+            }));
 
-                console.log(
-                    `\nFound ${result.stats.describeCount} describe blocks in '${relativePath}' file.`
-                );
-                console.log(
-                    `Found ${result.stats.testCount} test cases in '${relativePath}' file.`
-                );
-                console.log(
-                    `Found ${result.stats.skipCount} skipped tests in '${relativePath}' file.`
-                );
-                console.log(
-                    `Found ${result.stats.onlyCount} focused tests in '${relativePath}' file.`
-                );
-            }
+            await fs.mkdir(path.dirname(CACHE_FILE_PATH), { recursive: true });
+            await fs.writeFile(CACHE_FILE_PATH, JSON.stringify(dataToSave, null, 2));
+
+            console.log(`✅ Scan complete. Analysis data saved to '${CACHE_FILE_PATH}'.`);
         } catch (error) {
             console.error('An error occured:', error);
         }
