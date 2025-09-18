@@ -31,10 +31,16 @@ export const generateReport = (reportData: ReportData[]): void => {
         { totalDescribes: 0, totalTests: 0, totalSkips: 0, totalOnlys: 0 }
     );
 
-    console.log('\n--- Report Summary ---');
+    console.log('\n--- Report Summary ---\n');
     console.log(`Total files scanned: ${reportData.length}`);
-    console.log(`   Total describe blocks: ${totalStats.totalDescribes}`);
-    console.log(`   Total test blocks: ${totalStats.totalTests}`);
-    console.log(`   Total skip blocks: ${totalStats.totalSkips}`);
-    console.log(`   Total only blocks: ${totalStats.totalOnlys}`);
+    console.log(`Total test blocks: ${totalStats.totalTests}`);
+    console.log(`Total describe blocks: ${totalStats.totalDescribes}`);
+    console.log(`Total skip blocks: ${totalStats.totalSkips}`);
+    console.log(`Total only blocks: ${totalStats.totalOnlys}`);
+
+    if (totalStats.totalOnlys > 0) {
+        console.warn(
+            `\n⚠️   Warning: There are tests marked with ".only". Ensure this is intentional.`
+        );
+    }
 };
