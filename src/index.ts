@@ -3,6 +3,7 @@ import { findTestFiles } from './services/file-scanner.js';
 import { generateReport } from './services/reporter.js';
 import { Command } from 'commander';
 import fs from 'fs/promises';
+import chalk from 'chalk';
 import path from 'path';
 
 const CACHE_FILE_PATH = './.cache/analysis.json';
@@ -38,9 +39,9 @@ program
             await fs.mkdir(path.dirname(CACHE_FILE_PATH), { recursive: true });
             await fs.writeFile(CACHE_FILE_PATH, JSON.stringify(dataToSave, null, 2));
 
-            console.log(`✅ Scan complete. Analysis data saved to '${CACHE_FILE_PATH}'.`);
+            console.log(`${chalk.green('✅ Scan complete.')} Analysis data saved to '${chalk.cyan.underline(CACHE_FILE_PATH)}'.`);
         } catch (error) {
-            console.error('An error occured:', error);
+            console.error(`${chalk.red('❌ Something went wrong:')} ${error}`);
         }
     });
 
@@ -55,7 +56,7 @@ program
 
             generateReport(reportData);
         } catch (error) {
-            console.error('An error occured:', error);
+            console.error(`${chalk.red('❌ Something went wrong:')} ${chalk.bold(error)}`);
         }
     });
 

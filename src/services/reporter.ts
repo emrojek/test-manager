@@ -1,4 +1,5 @@
 import { TestStats } from './file-parser.js';
+import chalk from 'chalk';
 
 interface ReportData {
     relativePath: string;
@@ -10,14 +11,29 @@ interface ReportData {
  */
 
 export const generateReport = (reportData: ReportData[]): void => {
-    console.log('--- Test Analysis Report ---');
+    console.log(chalk.bold.yellow('--- Test Analysis Report ---'));
 
     for (const result of reportData) {
-        console.log(`\nFile: ${result.relativePath}`);
-        console.log(`   Describe blocks (.describe): ${result.stats.describeCount}`);
-        console.log(`   Test blocks (.test): ${result.stats.testCount}`);
-        console.log(`   Skip blocks (.skip): ${result.stats.skipCount}`);
-        console.log(`   Only blocks (.only): ${result.stats.onlyCount}`);
+        console.log(`\nFile: ${chalk.cyan.underline(result.relativePath)}`);
+        console.log(
+            chalk.dim(`   Describe blocks (.describe):`) +
+                ` ${chalk.bold(result.stats.describeCount)}`
+        );
+        console.log(
+            chalk.dim(`   Test blocks (.test):`) + ` ${chalk.bold(result.stats.testCount)}`
+        );
+
+        if (result.stats.skipCount > 0) {
+            console.log(
+                chalk.dim(`   Skip blocks (.skip):`) + ` ${chalk.bold(result.stats.skipCount)}`
+            );
+        }
+
+        if (result.stats.onlyCount > 0) {
+            console.log(
+                chalk.dim(`   Only blocks (.only):`) + ` ${chalk.bold(result.stats.onlyCount)}`
+            );
+        }
     }
 
     const totalStats = reportData.reduce(
@@ -31,16 +47,24 @@ export const generateReport = (reportData: ReportData[]): void => {
         { totalDescribes: 0, totalTests: 0, totalSkips: 0, totalOnlys: 0 }
     );
 
-    console.log('\n--- Report Summary ---\n');
-    console.log(`Total files scanned: ${reportData.length}`);
-    console.log(`Total test blocks: ${totalStats.totalTests}`);
-    console.log(`Total describe blocks: ${totalStats.totalDescribes}`);
-    console.log(`Total skip blocks: ${totalStats.totalSkips}`);
-    console.log(`Total only blocks: ${totalStats.totalOnlys}`);
+    console.log(chalk.bold.yellow('\n--- Report Summary ---\n'));
+    console.log(chalk.dim(`Total files scanned:`) + ` ${chalk.bold(reportData.length)}`);
+    console.log(chalk.dim(`Total test blocks:`) + ` ${chalk.bold(totalStats.totalTests)}`);
+    console.log(chalk.dim(`Total describe blocks:`) + ` ${chalk.bold(totalStats.totalDescribes)}`);
+
+    if (totalStats.totalSkips > 0) {
+        console.log(chalk.dim(`Total skip blocks:`) + ` ${chalk.bold(totalStats.totalSkips)}`);
+    }
 
     if (totalStats.totalOnlys > 0) {
-        console.warn(
-            `\n⚠️   Warning: There are tests marked with ".only". Ensure this is intentional.`
+        console.log(chalk.dim(`Total only blocks:`) + ` ${chalk.bold(totalStats.totalOnlys)}`);
+    }
+
+    if (totalStats.totalOnlys > 0) {
+        console.log(
+            chalk.bgRed.bold(
+                `\n[WARRNING] There are tests marked with ".only". Ensure this is intentional.`
+            )
         );
     }
 };
