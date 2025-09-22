@@ -23,6 +23,7 @@ This project is also a learning playground for building practical developer tool
 -   [TypeScript](https://www.typescriptlang.org/)
 -   [Commander.js](https://github.com/tj/commander.js/) - For building the CLI interface.
 -   [Glob](https://github.com/isaacs/node-glob) - For pattern-based file searching.
+-   [Chalk](https://github.com/chalk/chalk) - For colorizing console output.
 
 ## License
 
