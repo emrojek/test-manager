@@ -12,6 +12,7 @@ This project is also a learning playground for building practical developer tool
 
 -   [x] **File Scanner:** Recursively scans a directory to find all Playwright test files (`*.spec.ts`).
 -   [x] **Basic Parser:** Analyzes file content to count `describe` blocks and `test` cases.
+-   [x] **Test File Generator:** Creates new test files from a predefined template using `create` command with arguments and options.
 -   [ ] **CLI Interface:** Implements a professional command-line interface using `commander.js` to run the tool with commands and arguments (e.g., `test-manager scan <directory>`).
 -   [ ] **Advanced Parser:** Detects tests marked as `.skip` or `.only` and identifies tags (e.g., `@smoke`).
 -   [ ] **Reporting:** Generates clean console reports and structured JSON output summarizing the test suite.

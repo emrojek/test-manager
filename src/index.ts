@@ -1,3 +1,4 @@
+import { createTestFile } from './services/file-generator.js';
 import { parseFileContent } from './services/file-parser.js';
 import { findTestFiles } from './services/file-scanner.js';
 import { generateReport } from './services/reporter.js';
@@ -39,7 +40,11 @@ program
             await fs.mkdir(path.dirname(CACHE_FILE_PATH), { recursive: true });
             await fs.writeFile(CACHE_FILE_PATH, JSON.stringify(dataToSave, null, 2));
 
-            console.log(`${chalk.green('✅ Scan complete.')} Analysis data saved to '${chalk.cyan.underline(CACHE_FILE_PATH)}'.`);
+            console.log(
+                `${chalk.green('✅ Scan complete.')} Analysis data saved to '${chalk.cyan.underline(
+                    CACHE_FILE_PATH
+                )}'.`
+            );
         } catch (error) {
             console.error(`${chalk.red('❌ Something went wrong:')} ${error}`);
         }
@@ -55,6 +60,38 @@ program
             const reportData = JSON.parse(fileContent);
 
             generateReport(reportData);
+        } catch (error) {
+            console.error(`${chalk.red('❌ Something went wrong:')} ${chalk.bold(error)}`);
+        }
+    });
+
+program
+    .command('create')
+    .description('Create a new test file from a template')
+    .argument('<targetName>', 'Name of the new test file (without extension)')
+    .argument('<testSuiteName>', 'Name of the test suite (test.describe())')
+    .argument('<testCaseName>', 'Name of the test case (test())')
+    .option(
+        '-d, --directory <path>',
+        'Directory where the new test file will be created',
+        '../gad-playwright/tests'
+    )
+    .action(async (targetName, testSuiteName, testCaseName, options) => {
+        const targetDir = options.directory;
+
+        try {
+            const newTestFile = await createTestFile(
+                targetDir,
+                targetName,
+                testSuiteName,
+                testCaseName
+            );
+
+            console.log(
+                `${chalk.green(
+                    `✅ Test file '${chalk.bold.underline(targetName)}' successfully created in:`
+                )} ${chalk.cyan.underline(newTestFile)}`
+            );
         } catch (error) {
             console.error(`${chalk.red('❌ Something went wrong:')} ${chalk.bold(error)}`);
         }

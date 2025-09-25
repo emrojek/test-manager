@@ -8,6 +8,7 @@
     "dev": "tsx src/index.ts",
     "scan": "tsx src/index.ts scan ../gad-playwright/tests",
     "report": "tsx src/index.ts report",
+    "create": "tsx src/index.ts create",
     "start": "node dist/index.js"
   },
   "author": "",
