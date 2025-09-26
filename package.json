@@ -9,7 +9,9 @@
     "scan": "tsx src/index.ts scan ../gad-playwright/tests",
     "report": "tsx src/index.ts report",
     "create": "tsx src/index.ts create",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "author": "",
   "license": "ISC",
@@ -17,7 +19,8 @@
   "devDependencies": {
     "@types/node": "^24.3.2",
     "tsx": "^4.20.5",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
   },
   "dependencies": {
     "chalk": "^5.6.2",
