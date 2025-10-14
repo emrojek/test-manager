@@ -13,6 +13,7 @@ This project is also a learning playground for building practical developer tool
 -   [x] **File Scanner:** Recursively scans a directory to find all Playwright test files (`*.spec.ts`).
 -   [x] **Basic Parser:** Analyzes file content to count `describe` blocks and `test` cases.
 -   [x] **Test File Generator:** Creates new test files from a predefined template using `create` command with arguments and options.
+-   [ ] **Unit Tests:** Core logic is verified with unit tests using Vitest to ensure reliability and prevent regressions.
 -   [ ] **CLI Interface:** Implements a professional command-line interface using `commander.js` to run the tool with commands and arguments (e.g., `test-manager scan <directory>`).
 -   [ ] **Advanced Parser:** Detects tests marked as `.skip` or `.only` and identifies tags (e.g., `@smoke`).
 -   [ ] **Reporting:** Generates clean console reports and structured JSON output summarizing the test suite.
@@ -25,6 +26,7 @@ This project is also a learning playground for building practical developer tool
 -   [Commander.js](https://github.com/tj/commander.js/) - For building the CLI interface.
 -   [Glob](https://github.com/isaacs/node-glob) - For pattern-based file searching.
 -   [Chalk](https://github.com/chalk/chalk) - For colorizing console output.
+-   [Vitest](https://vitest.dev/) - For unit testing.
 
 ## License
 
