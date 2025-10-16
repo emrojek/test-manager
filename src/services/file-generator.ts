@@ -1,5 +1,5 @@
-import fs from 'fs/promises';
-import path from 'path';
+import { readFile, writeFile } from 'fs/promises';
+import { join } from 'path';
 
 /**
  * Creates a new test file based on a template.
@@ -16,8 +16,8 @@ export const createTestFile = async (
     testSuiteName: string,
     testCaseName: string
 ): Promise<string> => {
-    const templatePath = path.join(process.cwd(), 'src', 'templates', 'test.template.ts');
-    const templateContent = await fs.readFile(templatePath, 'utf-8');
+    const templatePath = join(process.cwd(), 'src', 'templates', 'test.template.ts');
+    const templateContent = await readFile(templatePath, 'utf-8');
 
     const newFileName = `${targetName.replace(/\s+/g, '-').toLowerCase()}.spec.ts`;
 
@@ -25,9 +25,9 @@ export const createTestFile = async (
         .replace('{{testSuiteName}}', testSuiteName)
         .replace('{{testCaseName}}', testCaseName);
 
-    const newFilePath = path.join(targetDir, newFileName);
+    const newFilePath = join(targetDir, newFileName);
 
-    await fs.writeFile(newFilePath, newContent);
+    await writeFile(newFilePath, newContent);
 
     return newFilePath;
 };
