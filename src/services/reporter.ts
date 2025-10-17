@@ -1,7 +1,7 @@
 import { TestStats } from './file-parser.js';
 import chalk from 'chalk';
 
-interface ReportData {
+export interface ReportData {
     relativePath: string;
     stats: TestStats;
 }
