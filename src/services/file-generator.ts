@@ -8,6 +8,14 @@ import { join } from 'path';
  * @param testSuiteName - The name for the test.describe() block.
  * @param testCaseName - The name for the test() block.
  * @returns A promise that resolves to the path of the newly created test file.
+ * @example
+ * const newTestFilePath = await createTestFile(
+ *   'tests/e2e',
+ *   'login form',
+ *   'Login Form',
+ *   'should submit the form'
+ * );
+ * console.log(newTestFilePath); // Outputs: tests/e2e/login-form.spec.ts
  */
 
 export const createTestFile = async (

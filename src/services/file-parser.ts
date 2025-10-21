@@ -6,9 +6,20 @@ export interface TestStats {
 }
 
 /**
- *
- * @param fileContent - The content of the file as a string.
- * @returns - An object containing the counts of 'describe' blocks, 'test' cases, 'skip' blocks, and 'only' blocks.
+ * Parses the content of a test file to extract statistics about test blocks.
+ * @param fileContent - The content of the test file as a string.
+ * @returns An object containing the counts of 'describe' blocks, 'test' cases, 'skip' blocks, and 'only' blocks.
+ * @example
+ * const fileContent = `
+ * test.describe('My Test Suite', () => {
+ *   test('should do something', () => {
+ *     // Test implementation
+ *   });
+ * });
+ * `;
+ * const stats = parseFileContent(fileContent);
+ * console.log(stats);
+ * // Outputs: { describeCount: 1, testCount: 1, skipCount: 0, onlyCount: 0 }
  */
 
 export const parseFileContent = (fileContent: string): TestStats => {
