@@ -55,7 +55,7 @@ describe('generateReport', () => {
             expect.stringContaining('Total skip blocks: 2'),
             expect.stringContaining('Total only blocks: 1'),
             expect.stringContaining(
-                '[WARRNING] There are tests marked with ".only". Ensure this is intentional.'
+                '[WARNING] There are tests marked with ".only". Ensure this is intentional.'
             ),
         ];
 
@@ -102,6 +102,24 @@ describe('generateReport', () => {
             expect.stringContaining('Total test blocks: 7'),
             expect.stringContaining('Total describe blocks: 2'),
             expect.stringContaining('Total skip blocks: 1'),
+        ];
+
+        expect(loggedMessages).toEqual(expectedReport);
+    });
+
+    test('should handle an empty report data array', () => {
+        const mockReportData: ReportData[] = [];
+
+        generateReport(mockReportData);
+
+        const loggedMessages = consoleLogSpy.mock.calls.flat();
+
+        const expectedReport = [
+            expect.stringContaining('--- Test Analysis Report ---'),
+            expect.stringContaining('--- Report Summary ---'),
+            expect.stringContaining('Total files scanned: 0'),
+            expect.stringContaining('Total test blocks: 0'),
+            expect.stringContaining('Total describe blocks: 0'),
         ];
 
         expect(loggedMessages).toEqual(expectedReport);
